@@ -98,6 +98,7 @@ public class GCPSimpleStorageFactory implements SimpleStorageFactory {
         }
         try {
             credentials = GoogleCredentials.fromStream(new ByteArrayInputStream(getServiceAcountJSON(config).toString().getBytes()));
+            log.info("Successfully logged in.");
         } catch (IOException e) {
             log.error(e.getMessage());
             throw new RuntimeException(e);
