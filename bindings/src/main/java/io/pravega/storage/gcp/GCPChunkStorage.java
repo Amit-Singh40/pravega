@@ -149,8 +149,8 @@ public class GCPChunkStorage extends BaseChunkStorage {
 
     @Override
     protected ChunkInfo doGetInfo(String chunkName) throws ChunkNotFoundException {
-        //Blob blob = this.storage.get(this.config.getBucket(), getObjectPath(chunkName), Storage.BlobGetOption.fields(Storage.BlobField.SIZE));
-        Blob blob = null;
+        Blob blob = this.storage.get(this.config.getBucket(), getObjectPath(chunkName), Storage.BlobGetOption.fields(Storage.BlobField.SIZE));
+        //Blob blob = null;
         if (null == blob) {
             throw new ChunkNotFoundException(chunkName, "doGetInfo", null);
         }
