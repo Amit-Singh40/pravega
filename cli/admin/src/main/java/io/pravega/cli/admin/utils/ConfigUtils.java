@@ -43,7 +43,8 @@ public class ConfigUtils {
             System.err.println("Exception reading input properties file: " + e.getMessage());
             pravegaProperties.clear();
         }
-
+        String clusterName = pravegaProperties.getProperty("pravegaservice.clusterName");
+        System.out.println("Cluster name === " + clusterName);
         // Second, load properties from command line if any.
         for (String propertyName: System.getProperties().stringPropertyNames()) {
             if (propertyName.startsWith(PRAVEGA_SERVICE_PROPERTY_NAME)
@@ -52,6 +53,8 @@ public class ConfigUtils {
                 pravegaProperties.setProperty(propertyName, getIfEnv(System.getProperties().getProperty(propertyName)));
             }
         }
+        System.out.println("Cluster name === " + pravegaProperties.getProperty("pravegaservice.clusterName"));
+        pravegaProperties.setProperty("pravegaservice.clusterName", clusterName);
         state.getConfigBuilder().include(pravegaProperties);
     }
 
