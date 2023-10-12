@@ -35,6 +35,8 @@ import java.util.Set;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
+
+import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 
 import static io.pravega.shared.MetricsNames.globalMetricName;
@@ -46,6 +48,7 @@ import static io.pravega.shared.MetricsTags.segmentTagDirect;
 /**
  * General Metrics for the SegmentStore.
  */
+@Slf4j
 public final class SegmentStoreMetrics {
     private static final DynamicLogger DYNAMIC_LOGGER = MetricsProvider.getDynamicLogger();
     private static final StatsLogger STATS_LOGGER = MetricsProvider.createStatsLogger("segmentstore");
@@ -130,11 +133,17 @@ public final class SegmentStoreMetrics {
             if (s != null) {
                 this.queueSize.reportSuccessValue(s.getQueueSize());
                 this.activeThreads.reportSuccessValue(s.getActiveThreadCount());
+                log.info("SLTSTest executor Queue size {}", s.getQueueSize());
+                log.info("SLTSTest executor Pool size {}", s.getPoolSize());
+                log.info("SLTSTest executor Active thread size {}", s.getActiveThreadCount());
             }
             ExecutorServiceHelpers.Snapshot ss = ExecutorServiceHelpers.getSnapshot(this.storageExecutor);
             if (ss != null) {
                 this.storageQueueSize.reportSuccessValue(ss.getQueueSize());
                 this.storageActiveThreads.reportSuccessValue(ss.getActiveThreadCount());
+                log.info("SLTSTest storageExecutor Queue size {}", ss.getQueueSize());
+                log.info("SLTSTest storageExecutor Pool size {}", ss.getPoolSize());
+                log.info("SLTSTest storageExecutor Active thread size {}", ss.getActiveThreadCount());
             }
         }
     }
